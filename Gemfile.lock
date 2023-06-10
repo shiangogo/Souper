@@ -116,6 +116,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.15.2-arm64-darwin)
       racc (~> 1.4)
+    pg (1.5.3)
     puma (5.6.5)
       nio4r (~> 2.0)
     racc (1.7.0)
@@ -156,8 +157,6 @@ GEM
       connection_pool
     reline (0.3.5)
       io-console (~> 0.5)
-    sqlite3 (1.6.3-aarch64-linux)
-    sqlite3 (1.6.3-arm64-darwin)
     thor (1.2.2)
     timeout (0.3.2)
     tzinfo (2.0.6)
@@ -176,10 +175,10 @@ DEPENDENCIES
   debug
   dotenv-rails
   line-bot-api
+  pg
   puma (~> 5.0)
   rails (~> 7.0.5)
   redis
-  sqlite3 (~> 1.4)
   tzinfo-data
 
 RUBY VERSION
