@@ -17,7 +17,8 @@ class HomeController < ApplicationController
     events = client.parse_events_from(body)
     events.each do |event|
       p "*****************"
-      p event
+      p $redis.ping
+      p event["source"]["type"]
       p "*****************"
       case event
       when Line::Bot::Event::Message
