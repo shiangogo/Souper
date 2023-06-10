@@ -70,6 +70,7 @@ GEM
       msgpack (~> 1.2)
     builder (3.2.4)
     concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
     crass (1.0.6)
     date (3.3.3)
     debug (1.8.0)
@@ -87,6 +88,7 @@ GEM
     io-console (0.6.0)
     irb (1.7.0)
       reline (>= 0.3.0)
+    line-bot-api (1.28.0)
     loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -148,6 +150,10 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    redis (5.0.6)
+      redis-client (>= 0.9.0)
+    redis-client (0.14.1)
+      connection_pool
     reline (0.3.5)
       io-console (~> 0.5)
     sqlite3 (1.6.3-aarch64-linux)
@@ -169,8 +175,10 @@ DEPENDENCIES
   bootsnap
   debug
   dotenv-rails
+  line-bot-api
   puma (~> 5.0)
   rails (~> 7.0.5)
+  redis
   sqlite3 (~> 1.4)
   tzinfo-data
 
