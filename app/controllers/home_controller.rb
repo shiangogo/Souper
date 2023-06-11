@@ -8,7 +8,6 @@ class HomeController < ApplicationController
   end
   
   def callback
-    p params
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
     unless client.validate_signature(body, signature)
@@ -16,35 +15,28 @@ class HomeController < ApplicationController
     end
 
     events = client.parse_events_from(body)
+
     events.each do |event|
-      p "*****************"
-      # p $redis.ping
-      # p event
-      # p event["source"]["type"]
-      p event.is_in_group?
-      p "*****************"
       case event
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          if event.message["text"] == "湯師傅上湯"
+          if event.message["text"] == "湯師傅上湯" && !$redis.get(event.chat_id)
             random_game = Game.find(Game.pluck(:id).sample)
-            
-            if event.is_in_group?
-              $redis.set(event["source"]["groupId"], random_game.id)
-              abc = $redis.get(event["source"]["groupId"])
-              p abc
-            else
-              $redis.set(event["source"]["userId"], random_game.id)
-            end
+
+            $redis.set(event.chat_id, {"game_title": random_game.title, "game_description": random_game.description, "game_whole_story": random_game.whole_story})
+
             client.reply_message(event['replyToken'], {type: "text", text: random_game.title})
 
+          elsif event.message["text"] == "湯師傅上湯" && $redis.get(event.chat_id)
+            p "您有正在進行中的遊戲"
+            client.reply_message(event['replyToken'], {type: "text", text: "你有正在進行中的遊戲"})
+          elsif $redis.get(event.chat_id)
+            client.reply_message(event['replyToken'], {type: "text", text: "功能還沒做好"})
+          else
+            p "啥都沒發生"
           end
-          # message = {
-          #   type: 'text',
-          #   text: event.message['text']
-          # }
-          # client.reply_message(event['replyToken'], message)
+
         end
       end
     end
@@ -55,11 +47,11 @@ class HomeController < ApplicationController
   private
 
   def client
-    @client ||= Line::Bot::Client.new { |config|
+    @client ||= Line::Bot::Client.new do |config|
       config.channel_id = ENV["LINE_CHANNEL_ID"]
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
       config.channel_token = ENV["LINE_CHANNEL_ACCESS_TOKEN"]
-    }
+    end
   end
 
 end
