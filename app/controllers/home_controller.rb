@@ -1,8 +1,6 @@
-require "line/bot"
-include LineBotHelper
-
 class HomeController < ApplicationController
-  
+  include LineBotHelper
+
   def index
     render plain: "Hello, world!"
   end
