@@ -28,7 +28,7 @@ class HomeController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           if event.message["text"] == "湯師傅上湯"
-            random_game = Game.order("RANDOM()").first
+            random_game = Game.find(Game.pluck(:id).sample)
             
             if event.is_in_group?
               $redis.set(event["source"]["groupId"], random_game.id)
