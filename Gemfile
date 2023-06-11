@@ -37,8 +37,8 @@ gem "bootsnap", require: false
 # gem "rack-cors"
 
 gem "redis"
-
 gem "line-bot-api"
+gem "ruby-openai"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
