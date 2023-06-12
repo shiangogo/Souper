@@ -17,16 +17,15 @@ class LineBotController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           if event.message["text"] == "湯師傅上湯" && !$redis.get(event.chat_id)
-            random_game = Game.find(Game.pluck(:id).sample)
-
-            $redis.set(event.chat_id, {"game_title": random_game.title, "game_description": random_game.description, "game_whole_story": random_game.whole_story}.to_json)
-
-            client.reply_message(event['replyToken'], {type: "text", text: "#{ random_game.title }\n#{ random_game.description }"})
+            set_game(event)
 
           elsif event.message["text"] == "湯師傅上湯" && $redis.get(event.chat_id)
             p "您有正在進行中的遊戲"
             client.reply_message(event['replyToken'], {type: "text", text: "你這道湯還沒喝完呢！"})
             
+          elsif event.message["text"] == "換湯" && $redis.get(event.chat_id)
+            set_game(event)
+
           elsif event.message["text"] == "喝完了" && $redis.get(event.chat_id)
             $redis.del(event.chat_id)
             client.reply_message(event['replyToken'], {type: "text", text: "好的，幫你清理清理～"})
@@ -57,5 +56,13 @@ class LineBotController < ApplicationController
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
       config.channel_token = ENV["LINE_CHANNEL_ACCESS_TOKEN"]
     end
+  end
+
+  def set_game(event)
+    random_game = Game.find(Game.pluck(:id).sample)
+
+    $redis.set(event.chat_id, {"game_title": random_game.title, "game_description": random_game.description, "game_whole_story": random_game.whole_story}.to_json)
+
+    client.reply_message(event['replyToken'], {type: "text", text: "#{ random_game.title }\n#{ random_game.description }"})
   end
 end
