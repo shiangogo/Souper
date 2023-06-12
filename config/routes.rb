@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   root to: "home#index"
-  post "/callback", to: "home#callback"
+  post "/callback", to: "line_bot#callback"
 end
