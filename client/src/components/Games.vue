@@ -28,9 +28,14 @@
 
     <div v-for="game in games" :key="game.id">
       <div>
-        <h2>標題：{{ game.title }}</h2>
+        <h2>[{{ game.id }}] 標題： {{ game.title }}</h2>
         <p>故事片段：{{ game.description }}</p>
         <p>完整故事：{{ game.whole_story }}</p>
+
+        <button @click="updateGame(game.id)">Edit this game</button>
+        <button @click="deleteGame(game.id, game.title)">
+          Delete this game
+        </button>
       </div>
     </div>
   </div>
@@ -58,6 +63,16 @@ export default {
 
     cancelEdit() {
       return true;
+    },
+    async deleteGame(id, title) {
+      if (confirm(`你確定要刪除「${title}」嗎？`)) {
+        await fetch(`${this.API_URL}/${id}`, {
+          method: "DELETE",
+        });
+        this.games = this.games.filter((game) => {
+          return game.id !== id;
+        });
+      }
     },
     async createGame() {
       const response = await fetch(API_URL, {
