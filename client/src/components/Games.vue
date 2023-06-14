@@ -48,9 +48,9 @@ export default {
   data() {
     return {
       games: [],
-      title: "Games",
-      description: "description",
-      wholeStory: "wholeStory",
+      title: "",
+      description: "",
+      wholeStory: "",
       difficulty: 0,
       isEditing: false,
       API_URL: "http://localhost:3000/games",
@@ -75,7 +75,7 @@ export default {
       }
     },
     async createGame() {
-      const response = await fetch(API_URL, {
+      const response = await fetch(this.API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,11 +84,12 @@ export default {
           title: this.title,
           description: this.description,
           whole_story: this.wholeStory,
+          difficulty: this.difficulty,
         }),
       });
 
       const data = await response.json();
-      games.push(data);
+      this.games.push(data);
 
       this.title = "";
       this.description = "";
