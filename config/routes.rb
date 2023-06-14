@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   # root "articles#index"
   root to: "home#index"
   post "/callback", to: "line_bot#callback"
+  resources :games
 end
