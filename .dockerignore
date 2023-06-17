@@ -1,0 +1,8 @@
+client
+log
+tmp
+.git
+.dockerignore
+Dockerfile
+README.md
+LICENSE

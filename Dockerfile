@@ -9,3 +9,7 @@ COPY Gemfile.lock ./Gemfile.lock
 RUN bundle
 
 COPY . .
+
+EXPOSE 3000
+
+CMD ["rails", "s", "-p", "3000"]
