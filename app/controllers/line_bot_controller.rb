@@ -29,7 +29,8 @@ class LineBotController < ApplicationController
           elsif event.message["text"] == "喝完了" && $redis.get(event.chat_id)
             $redis.del(event.chat_id)
             client.reply_message(event['replyToken'], {type: "text", text: "好的，幫你清理清理～"})
-            
+          
+          # 處理遊戲開始後，玩家提問的對話
           elsif $redis.get(event.chat_id)
             whole_story = JSON.parse($redis.get(event.chat_id))["game_whole_story"]
             description = JSON.parse($redis.get(event.chat_id))["game_description"]
