@@ -16,14 +16,17 @@
 
 ## 啟動方式
 
-1. 在 `.example.env` 中設定環境變量，並將其重新命名為 `.env` 。
-2. 開啟終端機，並 cd 至專案目錄。
-3. 確保本機安裝 Docker。
-4. 在終端機執行 `docker compose up --build` ，可建立容器並運行 PostgreSQL 、 Redis 和專案。下一次啟動可執行 `docker compose up`。
-5. 使用 Ngrok 將本地伺服器暴露，在終端機執行 `ngrok http 3000` 。
-6. 到 Line Developers 的後台，將 Messaging API 中 Webhook settings 設定的 Webhook URL 設定為 Ngrok 提供的網址，後面要加上 `/callback` ，完整如。https://xxxx-xxx-xxx-xxx-xxx.ngrok-free.app/callback
-7. 請確認按下 `Verify` 按鈕後，彈窗顯示 `Success` 的訊息。
-8. 啟用 Webhook ，將 Use webhook 打開。
+1. 創建一個新的 Line Messaging API 的 channel：https://developers.line.biz/zh-hant/
+2. 申請 OpenAI 的 API key：https://platform.openai.com/account/api-keys
+3. 在 `.example.env` 中設定環境變量，並將其重新命名為 `.env` 。
+4. 開啟終端機，並 cd 至專案目錄。
+5. 確保本機安裝 Docker ，下載網址：https://www.docker.com/。
+6. 在終端機執行 `docker compose up --build` ，可建立容器並運行 PostgreSQL 、 Redis 和專案。下一次啟動可執行 `docker compose up`。
+7. 確保本機安裝 ngrok ，下載網址：https://ngrok.com/download
+8. 使用 Ngrok 將本地伺服器暴露，在終端機執行 `ngrok http 3000` 。
+9. 到 Line Developers 的後台，將 Messaging API 中 Webhook settings 設定的 Webhook URL 設定為 Ngrok 提供的網址，後面要加上 `/callback` ，完整如。https://xxxx-xxx-xxx-xxx-xxx.ngrok-free.app/callback
+10. 請確認按下 `Verify` 按鈕後，彈窗顯示 `Success` 的訊息。
+11. 啟用 Webhook ，將 Use webhook 打開。
 
 ---
 
